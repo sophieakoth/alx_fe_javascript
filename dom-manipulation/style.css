@@ -1,0 +1,70 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+
+h1{
+    text-align: center;
+    /* background-color: blueviolet; */
+    
+}
+body{
+    background-color: darkgray;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    margin:20px auto;
+    gap: 10px;
+    /* background-image: linear-gradient(pink,blue); */
+    width: 500px;
+    height: 500px;
+}
+.container button{
+    background-color: brown;
+    padding: 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+}
+.container #quoteDisplay{
+    width:200px;
+    height:200px;
+    background-color: bisque; 
+    color:black;
+    border:1px solid black;
+    padding: 1rem;
+}
+
+.enter{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+
+}
+
+input{
+    border-radius: 5px;
+    color: black;
+    background-color: burlywood;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 2rem;
+}
+
+.enter button {
+    border-radius: 5px;
+    color: black;
+    background-color: burlywood;
+    font-weight: bold;
+    border: 1px solid black;
+    padding: 2rem;
+}
+
+
+
