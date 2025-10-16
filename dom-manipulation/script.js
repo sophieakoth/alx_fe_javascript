@@ -75,8 +75,8 @@ const quotes = [
   function showRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const selected = quotes[randomIndex];
-    quoteDisplay.textContent = `"${selected.text}"`;
-    categoryDisplay.textContent = `— ${selected.category}`;
+    quoteDisplay.innerHTML = `"${selected.text}"`;
+    categoryDisplay.innerHTML = `— ${selected.category}`;
   }
   
   // Function to create and handle the add-quote form
