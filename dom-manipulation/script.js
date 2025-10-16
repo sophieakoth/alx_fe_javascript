@@ -5,31 +5,31 @@ const quoteInput = document.querySelector("#newQuoteText");
 const categoryInput = document.querySelector("#newQuoteCategory");
 
 const quotes =[{
-   quote: "Start where you are. Use what you have. Do what you can.",
+   text: "Start where you are. Use what you have. Do what you can.",
     category:"Motivation"},
-{quote:"Success is not final, failure is not fatal: It is the courage to continue that counts.",
+{text:"Success is not final, failure is not fatal: It is the courage to continue that counts.",
     category:"Resilience"
 },
-{quote:"Do not wait for the perfect moment. Take the moment and make it perfect.",
+{text:"Do not wait for the perfect moment. Take the moment and make it perfect.",
     category:"Action"
 },
-{quote:"The quieter you become, the more you can hear.",
+{text:"The quieter you become, the more you can hear.",
     category:"Mindfulness"
 },
-{quote:"Creativity is intelligence having fun",
+{text:"Creativity is intelligence having fun",
     category:"Creativity"},
-{quote:"Design is not just what it looks like and feels like. Design is how it works",
+{text:"Design is not just what it looks like and feels like. Design is how it works",
     category:"Design"},
-{quote:"Art enables us to find ourselves and lose ourselves at the same time",
+{text:"Art enables us to find ourselves and lose ourselves at the same time",
     category:"Art"},
-{quote:"A smooth sea never made a skilled sailor",
+{text:"A smooth sea never made a skilled sailor",
     category:"Growth"}
 
 ];
 btn.addEventListener('click',function(){
     let random = Math.floor(Math.random()*quotes.length);
 
-   quote.innerText = quotes[random].quote;
+   quote.innerText = quotes[random].text;
    category.innerText = quotes[random].category;
 
 
@@ -45,10 +45,10 @@ function addQuote(){
      const newCategory = categoryInput.value.trim()
 
      if(newText){
-        quotes.push({quote:newText ,category:newCategory});
+        quotes.push({text:newText ,category:newCategory});
         quoteInput.value = "";
         categoryInput.value = "";
         
      }else{
-       alert ("Please enter a quote")};
+       alert ("Please enter a quote ")};
 }
