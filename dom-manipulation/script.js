@@ -260,7 +260,7 @@ async function syncQuotes() {
     await postQuoteToServer(quote);
   }
 
-  console.log("Quotes synced with server");
+  console.log("Quotes synced with server!");
 }
 
 
