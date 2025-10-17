@@ -239,7 +239,7 @@ async function postQuoteToServer(quote) {
         userId: 1
       }),
       headers: {
-        "Content-type": "application/json; charset=UTF-8"
+        "Content-Type": "application/json; charset=UTF-8"
       }
     });
 
