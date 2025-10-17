@@ -35,6 +35,11 @@
   
   <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
 
+  <div id="conflictNotice" style="display:none; background:#ffe0e0; padding:1em; margin-top:1em;">
+    <p>New quotes from server detected. <button onclick="resolveConflicts()">Review & Merge</button></p>
+  </div>
+  
+
     <script src="script.js"></script>
 </body>
 </html>
