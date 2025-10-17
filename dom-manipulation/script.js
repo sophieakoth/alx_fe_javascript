@@ -78,6 +78,8 @@ quotes = [
     } else {
       alert("Please enter a quote before adding.");
     }
+
+    postQuoteToServer({ text: newText, category: newCategory });
   }
   
   // Event listeners
@@ -194,6 +196,86 @@ function filterQuotes() {
 }
 
 
+// Syncing Data with Server and Implementing Conflict Resolution
+
+function fetchQuotesFromServer() {
+  fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
+    .then(response => response.json())
+    .then(data => {
+      // Convert mock posts to quote format
+      const serverQuotes = data.map(post => ({
+        text: post.title,
+        category: "Server"
+      }));
+
+      const conflicts = serverQuotes.filter(sq =>
+        !quotes.some(lq => lq.text === sq.text)
+      );
+
+      if (conflicts.length > 0) {
+        showConflictNotification(conflicts);
+      }
+
+
+      quotes.push(...serverQuotes);
+      saveQuotes();
+      populateCategories();
+      filterQuotes();
+      console.log("Fetched quotes from server.");
+    })
+    .catch(err => console.error("Error fetching quotes:", err));
+}
+
+//Simulate posting a new quote
+function postQuoteToServer(quote) {
+  fetch("https://jsonplaceholder.typicode.com/posts", {
+    method: "POST",
+    body: JSON.stringify({
+      title: quote.text,
+      body: quote.category,
+      userId: 1
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Posted quote to server:", data);
+    })
+    .catch(err => console.error("Error posting quote:", err));
+}
+
+
+
+//show notification when conflicts are found
+function showConflictNotification(conflicts) {
+  window.pendingConflicts = conflicts; // store for manual resolution
+  document.getElementById("conflictNotice").style.display = "block";
+}
+
+// Manual conflict Resolution
+
+function resolveConflicts() {
+  if (!window.pendingConflicts) return;
+
+  // Merge conflicts into local quotes
+  quotes.push(...window.pendingConflicts);
+  saveQuotes();
+  populateCategories();
+  filterQuotes();
+
+  // Clear notification
+  document.getElementById("conflictNotice").style.display = "none";
+  window.pendingConflicts = null;
+  alert("Conflicts resolved and quotes merged.");
+}
+
+
+
+
+
+
 
 
 
@@ -212,6 +294,6 @@ function filterQuotes() {
 
 
 
-
+setInterval(fetchQuotesFromServer, 30000); // every 30 seconds
 populateCategories();
 filterQuotes();
