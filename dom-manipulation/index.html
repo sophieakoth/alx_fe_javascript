@@ -11,6 +11,15 @@
 
     <div class="container">
     <div id="quoteDisplay"></div>
+
+<!-- Category filter -->
+<select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+    <!-- Dynamically populated categories -->
+  </select>
+
+
+
     <div class="category"></div>
     <button id="newQuote">Show New Quote</button>
 </div>
