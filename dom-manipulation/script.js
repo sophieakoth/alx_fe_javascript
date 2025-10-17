@@ -198,53 +198,71 @@ function filterQuotes() {
 
 // Syncing Data with Server and Implementing Conflict Resolution
 
-function fetchQuotesFromServer() {
-  fetch("https://jsonplaceholder.typicode.com/posts?_limit=5")
-    .then(response => response.json())
-    .then(data => {
-      // Convert mock posts to quote format
-      const serverQuotes = data.map(post => ({
-        text: post.title,
-        category: "Server"
-      }));
+async function fetchQuotesFromServer() {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
+    const data = await response.json();
 
-      const conflicts = serverQuotes.filter(sq =>
-        !quotes.some(lq => lq.text === sq.text)
-      );
+    console.log("Fetched data from mock API:", data);
 
-      if (conflicts.length > 0) {
-        showConflictNotification(conflicts);
-      }
+    const serverQuotes = data.map(post => ({
+      text: post.title,
+      category: "Server"
+    }));
 
+    const conflicts = serverQuotes.filter(sq =>
+      !quotes.some(lq => lq.text === sq.text)
+    );
 
-      quotes.push(...serverQuotes);
-      saveQuotes();
-      populateCategories();
-      filterQuotes();
-      console.log("Fetched quotes from server.");
-    })
-    .catch(err => console.error("Error fetching quotes:", err));
+    if (conflicts.length > 0) {
+      showConflictNotification(conflicts);
+    }
+
+    quotes.push(...serverQuotes);
+    saveQuotes();
+    populateCategories();
+    filterQuotes();
+  } catch (error) {
+    console.error("Error fetching mock data:", error);
+  }
 }
+
 
 //Simulate posting a new quote
-function postQuoteToServer(quote) {
-  fetch("https://jsonplaceholder.typicode.com/posts", {
-    method: "POST",
-    body: JSON.stringify({
-      title: quote.text,
-      body: quote.category,
-      userId: 1
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log("Posted quote to server:", data);
-    })
-    .catch(err => console.error("Error posting quote:", err));
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify({
+        title: quote.text,
+        body: quote.category,
+        userId: 1
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    });
+
+    const result = await response.json();
+    console.log("Posted quote to mock API:", result);
+  } catch (error) {
+    console.error("Error posting quote to server:", error);
+  }
 }
+
+
+async function syncQuotes() {
+  console.log("Starting sync with mock API...");
+
+  await fetchQuotesFromServer(); // Pull new quotes
+  // Optionally: push local quotes to server
+  for (const quote of quotes) {
+    await postQuoteToServer(quote);
+  }
+
+  console.log("Sync complete.");
+}
+
 
 
 
@@ -297,3 +315,4 @@ function resolveConflicts() {
 setInterval(fetchQuotesFromServer, 30000); // every 30 seconds
 populateCategories();
 filterQuotes();
+fetchQuotesFromServer(); // Initial fetch
